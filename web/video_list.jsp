@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -30,6 +31,7 @@
                         <th>Id</th>
                         <th>Título</th>
                         <th>Autor</th>
+                        <th>Estreno</th>
                         <th>Descripción</th>
                         <th>Reproducciones</th>
                         <th>Duración</th>
@@ -44,6 +46,8 @@
                             <td data-th="Id">${video.id}</td>
                             <td data-th="Título">${video.title}</td>
                             <td data-th="Autor">${video.author}</td>
+                            <td data-th="Estreno"> <fmt:formatDate value="${video.releaseDate.toGregorianCalendar().time}" pattern="dd-MM-yyyy" />
+                            </td>
                             <td data-th="Descripción">${video.description}</td>
                             <td data-th="Reproducciones">${video.reproductions}</td>
                             <td data-th="Duración">${video.duration}</td>
@@ -55,7 +59,7 @@
                                     </c:if>
                                 </a>
                             </td>
-                            <td data-th="Usuario">${video.getUser().getUsername()}</td>
+                            <td data-th="Usuario">${video.getUserId()}</td>
                         </tr>
                     </c:forEach>
                 </tbody>

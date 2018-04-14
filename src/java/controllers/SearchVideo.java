@@ -15,13 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.ws.WebServiceRef;
 import models.Video;
-import services.client.SearchVideoService_Service;
+import services.SearchVideoService_Service;
 
 /**
  *
  * @author Tito
  */
 public class SearchVideo extends HttpServlet {
+
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/SearchVideoService/SearchVideoService.wsdl")
+    private SearchVideoService_Service service_1;
 
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/SearchVideoService/SearchVideoService.wsdl")
     private SearchVideoService_Service service;
@@ -58,7 +61,7 @@ public class SearchVideo extends HttpServlet {
         } 
             
         request.setAttribute("videos", videos);
-        request.getRequestDispatcher("/client.jsp").forward(request, response);
+        request.getRequestDispatcher("/video_list.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -100,25 +103,28 @@ public class SearchVideo extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private java.util.List<services.client.Video> findVideoByAuthor(java.lang.String author) {
+    private java.util.List<services.Video> findVideoByAuthor(java.lang.String author) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
-        services.client.SearchVideoService port = service.getSearchVideoServicePort();
+        services.SearchVideoService port = service_1.getSearchVideoServicePort();
         return port.findVideoByAuthor(author);
     }
 
-    private java.util.List<services.client.Video> findVideoByTitle(java.lang.String title) {
+    private java.util.List<services.Video> findVideoByTitle(java.lang.String title) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
-        services.client.SearchVideoService port = service.getSearchVideoServicePort();
+        services.SearchVideoService port = service_1.getSearchVideoServicePort();
         return port.findVideoByTitle(title);
     }
 
-    private java.util.List<services.client.Video> findVideoByYear(int year) {
+    private java.util.List<services.Video> findVideoByYear(int year) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
-        services.client.SearchVideoService port = service.getSearchVideoServicePort();
+        services.SearchVideoService port = service_1.getSearchVideoServicePort();
         return port.findVideoByYear(year);
     }
+
+    
+    
 
 }
